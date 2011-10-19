@@ -3,15 +3,15 @@
 Summary:	TracBlockDiag Plugin for Trac
 Name:		trac-plugin-%{plugin}
 Version:	0.5.0
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/WWW
-Source0:	http://trac-hacks.org/changeset/latest/tracblockdiagplugin?old_path=/&filename=blockdiagplugin&format=zip#/%{plugin}.zip
+Source0:	http://trac-hacks.org/changeset/latest/tracblockdiagplugin?old_path=/&filename=blockdiagplugin&format=zip#/%{plugin}-%{version}.zip
 # Source0-md5:	add894ae5601a469ed9f4236a1203eb1
 URL:		http://trac-hacks.org/wiki/TracBlockDiagPlugin
 BuildRequires:	python-devel
-Requires:	trac >= %{trac_ver}
 Requires:	python-blockdiag
+Requires:	trac >= %{trac_ver}
 Suggests:	python-actdiag
 Suggests:	python-nwdiag
 Suggests:	python-seqdiag
@@ -21,7 +21,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 blockdiag and seqdiag is a powerful utility to generate diagrams from
 simple text format. This plugin provided wiki-processors which allow
-you to embed blockdiag diagrams to wiki page. 
+you to embed blockdiag diagrams to wiki page.
 
 %prep
 %setup -q -n trac%{plugin}plugin
@@ -47,14 +47,7 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if [ "$1" = "1" ]; then
-	%banner -e %{name} <<-'EOF'
-	To enable the %{plugin} plugin, add to conf/trac.ini:
-
-	[components]
-	%{plugin}.* = enabled
-EOF
-fi
+trac-enableplugin "blockdiagplugin.web_ui.*"
 
 %files
 %defattr(644,root,root,755)
